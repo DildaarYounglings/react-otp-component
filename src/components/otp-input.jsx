@@ -13,15 +13,33 @@ const OtpInput = ({ length, onOtpSubmit }) => {
     const value = e.target.value;
     if (isNaN(value)) return;
     const newOtp = [...otp];
-    // alow only 1 input
+    // alow only 1 input //
     newOtp[index] = value.substring(value.length - 1);
     setOtp(newOtp);
-    // submit trigger
+    // submit trigger //
     const combinedOtp = newOtp.join("");
-    onOtpSubmit(combinedOtp);
+    if (combinedOtp.length === length) onOtpSubmit(combinedOtp);
+    // Move to next input if current field //
+    if (value && index < length - 1 && inputRefs.current[index + 1]) {
+      inputRefs.current[index + 1].focus();
+    }
   };
-  const handleClick = (e) => {};
-  const handleOnKeyDown = (index, e) => {};
+  const handleClick = (index) => {
+    inputRefs.current[index].setSelectionRange(0, 1);
+    if (index > 0 && !otp[index - 1]) {
+      inputRefs.current[otp.indexOf("")].focus();
+    }
+  };
+  const handleOnKeyDown = (index, e) => {
+    if (
+      e.key === "Backspace" &&
+      !otp[index] &&
+      index > 0 &&
+      inputRefs.current[index - 1]
+    ) {
+      inputRefs.current[index - 1].focus();
+    }
+  };
   return (
     <div>
       {otp.map((value, index) => {

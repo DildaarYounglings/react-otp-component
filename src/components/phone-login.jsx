@@ -2,8 +2,8 @@ import { useState } from "react";
 import OtpInput from "./otp-input";
 
 const PhoneOtpForm = () => {
-  const [phoneNum, setPhoneNum] = useState("1234567890");
-  const [showOtpInput, setShowOtpInput] = useState(true);
+  const [phoneNum, setPhoneNum] = useState("");
+  const [showOtpInput, setShowOtpInput] = useState(false);
   const handleSubmit = (e) => {
     // preventing browser reload
     e.preventDefault();
